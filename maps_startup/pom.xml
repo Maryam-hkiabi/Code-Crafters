@@ -30,8 +30,8 @@
       </dependency>
       <dependency>
         <groupId>com.google.maps</groupId>
-        <artifactId>google-maps-places</artifactId>
-        <version>0.17.0</version>
+        <artifactId>google-maps-services</artifactId>
+        <version>2.2.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
