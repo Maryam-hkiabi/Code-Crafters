@@ -6,7 +6,7 @@ public class Context {
 
     protected static final String key = "AIzaSyAHh-dlNGXf-xhTCfO9ZBbB3RtR3YZ-kNk";
 
-    protected static GeoApiContext context = new GeoApiContext.Builder()
+    public static GeoApiContext context = new GeoApiContext.Builder()
             .apiKey(key)
             .build();
 }
