@@ -19,4 +19,4 @@ The steps i followed and made java classes:
 10) TextSearch_UseCase_test
 
 
-
+if you run TextSearch, it will ask you to input a keyword that is a text search, and it will show results. 
