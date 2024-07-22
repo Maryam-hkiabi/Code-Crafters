@@ -16,6 +16,8 @@
       <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.7.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/google-maps-services-2.2.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
