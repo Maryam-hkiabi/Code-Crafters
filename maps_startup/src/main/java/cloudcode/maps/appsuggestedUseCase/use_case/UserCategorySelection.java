@@ -1,6 +1,5 @@
 package cloudcode.maps.appsuggestedUseCase.use_case;
 
-import cloudcode.maps.appsuggestedUseCase.AppSuggestedInteractor;
 import com.google.maps.errors.ApiException;
 
 import java.io.IOException;

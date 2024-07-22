@@ -1,4 +1,4 @@
-package cloudcode.maps.appsuggestedUseCase;
+package cloudcode.maps.appsuggestedUseCase.use_case;
 
 import java.util.ArrayList;
 

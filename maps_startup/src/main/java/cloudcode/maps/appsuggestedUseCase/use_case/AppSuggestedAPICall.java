@@ -1,4 +1,4 @@
-package cloudcode.maps.appsuggestedUseCase;
+package cloudcode.maps.appsuggestedUseCase.use_case;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

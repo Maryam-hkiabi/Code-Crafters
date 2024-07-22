@@ -1,8 +1,9 @@
 package cloudcode.maps.appsuggestedUseCase;
 
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedInputData;
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedOutputBoundary;
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedOutputData;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AppSuggestedInteractorTest {
 

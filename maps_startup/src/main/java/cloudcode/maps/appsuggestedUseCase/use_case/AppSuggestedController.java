@@ -1,7 +1,5 @@
 package cloudcode.maps.appsuggestedUseCase.use_case;
 
-import cloudcode.maps.appsuggestedUseCase.AppSuggestedInputBoundary;
-import cloudcode.maps.appsuggestedUseCase.AppSuggestedInputData;
 import com.google.maps.errors.ApiException;
 
 import java.io.IOException;

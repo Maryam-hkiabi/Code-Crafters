@@ -1,7 +1,5 @@
-package cloudcode.maps.appsuggestedUseCase;
+package cloudcode.maps.appsuggestedUseCase.use_case;
 
-import cloudcode.maps.appsuggestedUseCase.use_case.PlaceCategories;
-import cloudcode.maps.appsuggestedUseCase.use_case.UserCategorySelection;
 import com.google.maps.errors.ApiException;
 
 import java.io.IOException;
