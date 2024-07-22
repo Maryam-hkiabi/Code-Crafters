@@ -15,6 +15,8 @@ The steps i followed and made java classes:
 6) TextSearch_OutputData
 7) TextSearch_Interactor
 8) TextSearch_Controller
+9) i also made TextSearch file = which is the main Use case
+10) TextSearch_UseCase_test
 
-i am still trying to do testing
+
 
