@@ -1,5 +1,7 @@
 # CSC207 Software Design Project Blueprint: Code Crafters
 
+entity - place, routes, suggestions 
+
 # Team Information:
 Name: Code Crafters 
 
