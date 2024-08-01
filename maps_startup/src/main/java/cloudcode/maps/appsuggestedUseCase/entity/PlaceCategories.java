@@ -1,4 +1,4 @@
-package cloudcode.maps.appsuggestedUseCase.use_case;
+package cloudcode.maps.appsuggestedUseCase.entity;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class PlaceCategories {
         this.categories = categories;
     }
 
-    ArrayList<String> getCategories() {
+    public ArrayList<String> getCategories() {
         return categories;
     }
 }

@@ -1,4 +1,7 @@
-package cloudcode.maps.appsuggestedUseCase.use_case;
+package cloudcode.maps.appsuggestedUseCase.interface_adapter;
+
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedOutputBoundary;
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedOutputData;
 
 public class AppSuggestedPresenter implements AppSuggestedOutputBoundary {
 

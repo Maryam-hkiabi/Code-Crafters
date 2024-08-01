@@ -1,8 +1,13 @@
-package cloudcode.maps.appsuggestedUseCase.use_case;
+package cloudcode.maps.appsuggestedUseCase.interface_adapter;
 
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedInputBoundary;
+import cloudcode.maps.appsuggestedUseCase.use_case.AppSuggestedInputData;
+import cloudcode.maps.appsuggestedUseCase.entity.PlaceCategories;
 import com.google.maps.errors.ApiException;
 
 import java.io.IOException;
+
+import cloudcode.maps.appsuggestedUseCase.entity.PlaceCategories;
 
 public class AppSuggestedController {
 

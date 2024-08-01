@@ -10,7 +10,7 @@ public class AppSuggestedOutputData {
         this.places = places;
     }
 
-    ArrayList<ArrayList<String>> getPlaces() {
+    public ArrayList<ArrayList<String>> getPlaces() {
         return places;
     }
 }
