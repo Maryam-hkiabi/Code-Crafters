@@ -1,5 +1,12 @@
 # CSC207 Software Design Project Blueprint: Code Crafters
 
+THIS BRANCH: App Suggested Use Case:
+
+Gives a list of place categories to the user to choose from, and the user selects one and is given a list of nearby places related to that cateogory.
+
+TO RUN THE USE CASE: Run AppSuggestedMain class and follow prompts.
+
+
 # Team Information:
 Name: Code Crafters 
 
