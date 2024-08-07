@@ -11,8 +11,6 @@ import com.google.maps.model.DirectionsResult;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static jdk.nashorn.internal.objects.NativeSet.size;
-
 public class RoutingInteractor implements RoutingInputBoundary {
 
     final RoutingOutputBoundary routePresenter;
@@ -43,7 +41,7 @@ public class RoutingInteractor implements RoutingInputBoundary {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        for (int i = 0; i < size(apireturn.routes); i++) {
+        for (int i = 0; i < apireturn.routes.length; i++) {
             summary = gson.toJson(apireturn.routes[i].summary);
             startaddress = gson.toJson(apireturn.routes[i].legs[0].startAddress);
             endaddress = gson.toJson(apireturn.routes[i].legs[0].endAddress);
@@ -51,7 +49,7 @@ public class RoutingInteractor implements RoutingInputBoundary {
             meterdistance = Float.valueOf(gson.toJson(apireturn.routes[i].legs[0].distance.inMeters));
             displayduration = gson.toJson(apireturn.routes[i].legs[0].duration.humanReadable);
             secondsduration = Float.valueOf(gson.toJson(apireturn.routes[i].legs[0].duration.inSeconds));
-            polyline = gson.toJson(apireturn.routes[i].overviewPolyline.toString());
+            polyline = gson.toJson(apireturn.routes[i].overviewPolyline.getEncodedPath());
 
             Route route = routeFactory.create(summary, startaddress, endaddress, displaydistance, meterdistance,
                     displayduration, secondsduration, polyline);
