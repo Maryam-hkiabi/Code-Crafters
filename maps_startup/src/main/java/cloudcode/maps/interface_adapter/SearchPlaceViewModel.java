@@ -5,10 +5,12 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchPlaceViewModel extends ViewModel {
 
-    public final String TITLE_LABEL = "Search Place View";
+    public final String TITLE_LABEL = "UofT Campus Location Search";
     public final String SEARCH_LABEL = "Search Place";
-
     public final String SEARCH_BUTTON_LABEL = "Search";
+    public final String ROUTE_BUTTON_LABEL = "Route";
+    public final String SET_ORIGIN_LABEL = "Set Origin";
+    public final String SET_DESTINATION_LABEL = "Set Destination";
 
     private SearchPlaceState state = new SearchPlaceState();
 

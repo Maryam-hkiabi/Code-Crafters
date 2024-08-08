@@ -2,33 +2,44 @@ package cloudcode.maps.interface_adapter;
 
 import cloudcode.maps.use_case.SearchPlaceOutputBoundary;
 import cloudcode.maps.use_case.SearchPlaceOutputData;
+import cloudcode.maps.use_case.SearchPlaceOutputRoute;
 
 public class SearchPlacePresenter implements SearchPlaceOutputBoundary {
 
     private final SearchPlaceViewModel searchPlaceViewModel;
-    private final ResultsPlaceViewModel resultsPlaceViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public SearchPlacePresenter(ViewManagerModel viewManagerModel,
-                                SearchPlaceViewModel searchPlaceViewModel,
-                                ResultsPlaceViewModel resultsPlaceViewModel) {
+    public SearchPlacePresenter(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.searchPlaceViewModel = searchPlaceViewModel;
-        this.resultsPlaceViewModel = resultsPlaceViewModel;
     }
 
     @Override
-    public void prepareResultsView(SearchPlaceOutputData results) {
+    public void updateSearchResults(SearchPlaceOutputData results) {
 
         SearchPlaceState searchPlaceState = searchPlaceViewModel.getState();
-        ResultsPlaceState resultsPlaceState = resultsPlaceViewModel.getState();
 
-        resultsPlaceState.setResults(results.getResults());
+        searchPlaceState.setResults(results.getResults());
+        searchPlaceState.setLocData(results.getLocData());
 
-        this.resultsPlaceViewModel.setState(resultsPlaceState);
-        resultsPlaceViewModel.firePropertyChanged();
+        this.searchPlaceViewModel.setState(searchPlaceState);
+        searchPlaceViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(resultsPlaceViewModel.getViewName());
+        viewManagerModel.setActiveView(searchPlaceViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    public void updateRouteResults(SearchPlaceOutputRoute routes) {
+
+        SearchPlaceState searchPlaceState = searchPlaceViewModel.getState();
+
+        searchPlaceState.setRoutes(routes.getRoutes());
+        searchPlaceState.setLocList(routes.getLocList());
+
+        this.searchPlaceViewModel.setState(searchPlaceState);
+        searchPlaceViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(searchPlaceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

@@ -9,13 +9,21 @@ import java.io.IOException;
 public class SearchPlaceController {
 
     final SearchPlaceInputBoundary mapsSearchPlaceUseCaseInteractor;
+
     public SearchPlaceController(SearchPlaceInputBoundary mapsSearchPlaceUseCaseInteractor) {
         this.mapsSearchPlaceUseCaseInteractor = mapsSearchPlaceUseCaseInteractor;
     }
 
-    public void execute(String input) throws IOException, InterruptedException, ApiException {
+    public void executeSearch(String input) throws IOException, InterruptedException, ApiException {
         SearchPlaceInputData searchPlaceInputData = new SearchPlaceInputData(input);
 
         mapsSearchPlaceUseCaseInteractor.execute(searchPlaceInputData);
+    }
+
+    public void executeRoute(String origin, String destination) throws IOException, InterruptedException, ApiException {
+        SearchPlaceInputData searchPlaceOrigin = new SearchPlaceInputData(origin);
+        SearchPlaceInputData searchPlaceDestination = new SearchPlaceInputData(destination);
+
+        mapsSearchPlaceUseCaseInteractor.execute(searchPlaceOrigin, searchPlaceDestination);
     }
 }

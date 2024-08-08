@@ -1,6 +1,10 @@
 <component name="libraryTable">
   <library name="google.maps.services" type="repository">
-    <properties maven-id="com.google.maps:google-maps-services:2.2.0" />
+    <properties maven-id="com.google.maps:google-maps-services:2.2.0">
+      <exclude>
+        <dependency maven-id="org.slf4j:slf4j-api" />
+      </exclude>
+    </properties>
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/google-maps-services-2.2.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/okhttp-4.10.0.jar!/" />
@@ -13,11 +17,20 @@
       <root url="jar://$PROJECT_DIR$/lib/gson-2.10.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/opencensus-api-0.31.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/grpc-context-1.27.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.7.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/google-maps-services-2.2.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/google-maps-services-2.2.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okhttp-4.10.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okio-jvm-3.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-jdk8-1.5.31-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-jdk7-1.5.31-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-common-1.5.31-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.6.20-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/annotations-13.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.10.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opencensus-api-0.31.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/grpc-context-1.27.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
