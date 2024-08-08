@@ -1,13 +1,16 @@
 package cloudcode.maps.Interface_adapter;
 
-
 public class Place {
     private String name;
     private String address;
+    private double latitude;
+    private double longitude;
 
-    public Place(String name, String address) {
+    public Place(String name, String address, double latitude, double longitude) {
         this.name = name;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getName() {
@@ -18,9 +21,16 @@ public class Place {
         return address;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public String toString() {
-        return "'" + name + "', '" + address + "'";
+        return "\"" + name + ", " + address + ", " + latitude + ", " + longitude + "\"";
     }
 }
-
