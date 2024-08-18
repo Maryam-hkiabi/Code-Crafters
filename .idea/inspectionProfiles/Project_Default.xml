@@ -44,6 +44,14 @@
           <option value="hello-world" />
           <option value="hello-world" />
           <option value="hello-world" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
+          <option value="uoft_maps" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -56,10 +64,26 @@
           <option value="com.google.guava:guava:30.0-jre" />
           <option value="com.google.protobuf:protobuf-java:3.14.0" />
           <option value="com.jayway.jsonpath:json-path:2.7.0" />
+          <option value="ch.qos.logback:logback-classic:1.2.12" />
+          <option value="ch.qos.logback:logback-core:1.2.12" />
+          <option value="org.springframework:spring-core:5.3.31" />
+          <option value="org.yaml:snakeyaml:1.30" />
+          <option value="org.springframework:spring-webmvc:5.3.31" />
+          <option value="com.google.guava:guava:30.0-jre" />
+          <option value="com.google.protobuf:protobuf-java:3.14.0" />
+          <option value="com.jayway.jsonpath:json-path:2.7.0" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
