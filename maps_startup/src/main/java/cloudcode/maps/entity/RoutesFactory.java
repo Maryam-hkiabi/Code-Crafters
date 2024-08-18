@@ -5,8 +5,6 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.PlacesSearchResult;
 
-import java.util.List;
-
 public class RoutesFactory {
 
     public static Routes createRoutes(DirectionsRoute[] routes,
