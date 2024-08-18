@@ -10,7 +10,10 @@ import cloudcode.maps.view.routing.JXMapViewerCustom;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main {
+import static java.awt.BorderLayout.*;
+
+public class UoftMaps {
+
     public static void main(String[] args) {
         JFrame application = new JFrame("UofT Maps - Searching & Routing");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -35,8 +38,8 @@ public class Main {
 
         application.setLayout(new BorderLayout());
 
-        application.add(views, BorderLayout.PAGE_START);
-        application.add(jxMapViewer, BorderLayout.CENTER);
+        application.add(views, PAGE_START);
+        application.add(jxMapViewer, CENTER);
 
         application.pack();
         application.setVisible(true);

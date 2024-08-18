@@ -29,12 +29,14 @@ public class SearchPlaceUseCaseFactory {
 
     private static SearchPlaceController createSearchPlaceUseCase(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel, JXMapViewerCustom jxMapViewer) throws IOException {
 
-        ResultsDataAccessInterface mapsDataAccessObject = new MapsDataAccessObject();
+        MapsDataAccessInterface mapsDataAccessObject = new GoogleMapsDataAccessObject();
+        FileDataAccessInterface fileDataAccessObject = new LocationFileDataAccessObject("./uoft-campus-locations.csv");
 
         SearchPlaceOutputBoundary searchPlaceOutputBoundary = new SearchPlacePresenter(viewManagerModel, searchPlaceViewModel);
 
-        SearchPlaceInputBoundary mapsSearchPlaceUseCaseInteractor = new SearchPlaceInteractor(mapsDataAccessObject, searchPlaceOutputBoundary);
+        SearchPlaceInputBoundary resultsUseCaseInteractor = new SearchPlaceInteractor(
+                mapsDataAccessObject, fileDataAccessObject, searchPlaceOutputBoundary);
 
-        return new SearchPlaceController(mapsSearchPlaceUseCaseInteractor);
+        return new SearchPlaceController(resultsUseCaseInteractor);
     }
 }

@@ -7,6 +7,7 @@ public class Waypoint extends JButton {
 
     public Waypoint() {
         setContentAreaFilled(false);
+        setBorderPainted(false);
         setIcon(new ImageIcon("maps_startup/src/main/java/cloudcode/maps/view/icon/pin.png"));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setSize(6, 6);

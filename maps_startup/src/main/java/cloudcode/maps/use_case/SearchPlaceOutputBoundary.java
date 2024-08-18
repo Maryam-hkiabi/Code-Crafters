@@ -1,7 +1,10 @@
 package cloudcode.maps.use_case;
 
-public interface SearchPlaceOutputBoundary {
-    void updateSearchResults(SearchPlaceOutputData results);
+import cloudcode.maps.entity.Places;
+import cloudcode.maps.entity.Routes;
 
-    void updateRouteResults(SearchPlaceOutputRoute routes);
+public interface SearchPlaceOutputBoundary {
+    void updateSearchResults(Places places);
+
+    void updateRouteResults(Routes routes);
 }

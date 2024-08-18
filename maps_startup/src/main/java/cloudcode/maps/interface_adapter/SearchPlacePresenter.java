@@ -1,5 +1,7 @@
 package cloudcode.maps.interface_adapter;
 
+import cloudcode.maps.entity.Places;
+import cloudcode.maps.entity.Routes;
 import cloudcode.maps.use_case.SearchPlaceOutputBoundary;
 import cloudcode.maps.use_case.SearchPlaceOutputData;
 import cloudcode.maps.use_case.SearchPlaceOutputRoute;
@@ -15,8 +17,9 @@ public class SearchPlacePresenter implements SearchPlaceOutputBoundary {
     }
 
     @Override
-    public void updateSearchResults(SearchPlaceOutputData results) {
+    public void updateSearchResults(Places places) {
 
+        SearchPlaceOutputData results = new SearchPlaceOutputData(places.getPlaces(), places.getLocations());
         SearchPlaceState searchPlaceState = searchPlaceViewModel.getState();
 
         searchPlaceState.setResults(results.getResults());
@@ -29,12 +32,18 @@ public class SearchPlacePresenter implements SearchPlaceOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
-    public void updateRouteResults(SearchPlaceOutputRoute routes) {
+    public void updateRouteResults(Routes routes) {
+
+        SearchPlaceOutputRoute results = new SearchPlaceOutputRoute(routes.getRoutes(), routes.getLocations(), routes.getPolylines(),
+                routes.getOriInfo(), routes.getDesInfo());
 
         SearchPlaceState searchPlaceState = searchPlaceViewModel.getState();
 
-        searchPlaceState.setRoutes(routes.getRoutes());
-        searchPlaceState.setLocList(routes.getLocList());
+        searchPlaceState.setRoutes(results.getRoutes());
+        searchPlaceState.setLocList(results.getLocations());
+        searchPlaceState.setPolylineList(results.getPolylines());
+        searchPlaceState.setOriData(results.getOriInfo());
+        searchPlaceState.setDesData(results.getDesInfo());
 
         this.searchPlaceViewModel.setState(searchPlaceState);
         searchPlaceViewModel.firePropertyChanged();
