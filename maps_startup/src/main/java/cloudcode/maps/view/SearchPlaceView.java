@@ -36,7 +36,6 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
     private final JButton route;
 
     // JTable resultsTable;
-    // JTable routesTable;
 
     private EventWaypoint getEvent() {
         return waypoint -> JOptionPane.showMessageDialog(this, waypoint.getName(),
@@ -76,9 +75,11 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
 
         JComboBox<String> originInputField = new JComboBox<>(searchPlaceViewModel.locList.toArray(new String[0]));
         JComboBox<String> destinationInputField = new JComboBox<>(searchPlaceViewModel.locList.toArray(new String[0]));
+        JComboBox<String> waypointInputField = new JComboBox<>(searchPlaceViewModel.locList.toArray(new String[0]));
 
         AutoCompleteDecorator.decorate(originInputField);
         AutoCompleteDecorator.decorate(destinationInputField);
+        AutoCompleteDecorator.decorate(waypointInputField);
 
         LabelInputPanel searchInput = new LabelInputPanel(
                 new JLabel(searchPlaceViewModel.SEARCH_LABEL), searchInputField);
@@ -88,6 +89,9 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
 
         LabelInputPanel destinationInput = new LabelInputPanel(
                 new JLabel(searchPlaceViewModel.SET_DESTINATION_LABEL), destinationInputField);
+
+        LabelInputPanel waypointInput = new LabelInputPanel(
+                new JLabel(searchPlaceViewModel.SET_WAYPOINT_LABEL), waypointInputField);
 
         searchInput.setAlignmentX(Component.CENTER_ALIGNMENT);
         originInput.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -116,17 +120,17 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
 
                             for (int i = 0; i < results.length; i++) {
                                 String formattedName =
-                                        searchPlaceViewModel.attrA[0] + ": " + results[i][0].toString() + "\r\n" +
-                                        searchPlaceViewModel.attrA[1] + ": " + results[i][1].toString() + "\r\n" +
-                                        searchPlaceViewModel.attrA[2] + ": " + results[i][2].toString() + "\r\n" +
-                                        searchPlaceViewModel.attrA[3] + ": " + results[i][3].toString();
+                                        searchPlaceViewModel.attr[0] + ": " + results[i][0].toString() + "\r\n" +
+                                        searchPlaceViewModel.attr[1] + ": " + results[i][1].toString() + "\r\n" +
+                                        searchPlaceViewModel.attr[2] + ": " + results[i][2].toString() + "\r\n" +
+                                        searchPlaceViewModel.attr[3] + ": " + results[i][3].toString();
 
                                 searchPlaceViewModel.waypoints.add(new MyWaypoint(formattedName,
                                         mapEvent, new GeoPosition(locData[i].lat, locData[i].lng)));
                             }
                             searchPlaceViewModel.initWaypoint(jxMapViewer);
 
-                            // resultsTable = new JTable(results, attrA);
+                            // resultsTable = new JTable(results, attr);
                             // resultsTable.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                             // JScrollPane scrollPane = new JScrollPane(resultsTable);
@@ -148,39 +152,55 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
                 evt -> {
                     if (evt.getSource().equals(route)) {
                         try {
-                            searchPlaceController.executeRoute(originInputField.getSelectedItem().toString(),
-                                    destinationInputField.getSelectedItem().toString());
+                            searchPlaceController.executeRoute(
+                                    originInputField.getSelectedItem().toString(),
+                                    destinationInputField.getSelectedItem().toString(),
+                                    waypointInputField.getSelectedItem().toString()
+                            );
 
                             Object[][] routes = searchPlaceViewModel.getState().getRoutes();
-                            LatLng[][] locList = searchPlaceViewModel.getState().getLocList();
+                            LatLng[] locList = searchPlaceViewModel.getState().getLocList();
                             EncodedPolyline[] polylineList = searchPlaceViewModel.getState().getPolylineList();
 
                             Object[] oriData = searchPlaceViewModel.getState().getOriData();
                             Object[] desData = searchPlaceViewModel.getState().getDesData();
+                            Object[] wayData = searchPlaceViewModel.getState().getWayData();
 
                             String formattedOri =
-                                    searchPlaceViewModel.attrA[0] + ": " + oriData[0].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[1] + ": " + oriData[1].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[2] + ": " + oriData[2].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[3] + ": " + oriData[3].toString();
+                                    searchPlaceViewModel.attr[0] + ": " + oriData[0].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[1] + ": " + oriData[1].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[2] + ": " + oriData[2].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[3] + ": " + oriData[3].toString();
 
                             String formattedDes =
-                                    searchPlaceViewModel.attrA[0] + ": " + desData[0].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[1] + ": " + desData[1].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[2] + ": " + desData[2].toString() + "\r\n" +
-                                    searchPlaceViewModel.attrA[3] + ": " + desData[3].toString();
+                                    searchPlaceViewModel.attr[0] + ": " + desData[0].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[1] + ": " + desData[1].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[2] + ": " + desData[2].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[3] + ": " + desData[3].toString();
 
-                            for (int i = 0; i < routes.length; i++) {
-                                MyWaypoint waypointA = new MyWaypoint(formattedOri, MyWaypoint.PointType.START,
-                                        mapEvent, new GeoPosition(locList[i][0].lat, locList[i][0].lng));
+                            String formattedWay =
+                                    searchPlaceViewModel.attr[0] + ": " + wayData[0].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[1] + ": " + wayData[1].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[2] + ": " + wayData[2].toString() + "\r\n" +
+                                    searchPlaceViewModel.attr[3] + ": " + wayData[3].toString();
 
-                                MyWaypoint waypointB = new MyWaypoint(formattedDes, MyWaypoint.PointType.END,
-                                        mapEvent, new GeoPosition(locList[i][1].lat, locList[i][1].lng));
+                            MyWaypoint waypointA = new MyWaypoint(formattedOri, mapEvent,
+                                    new GeoPosition(locList[0].lat, locList[0].lng));
 
-                                if (searchPlaceViewModel.waypoints.isEmpty()) {
-                                    searchPlaceViewModel.waypoints.add(waypointA);
-                                    searchPlaceViewModel.waypoints.add(waypointB);
-                                }
+                            MyWaypoint waypointB = new MyWaypoint(formattedDes, mapEvent,
+                                    new GeoPosition(locList[1].lat, locList[1].lng));
+
+                            if (formattedWay.equals(formattedDes)) {
+                                searchPlaceViewModel.waypoints.add(waypointA);
+                                searchPlaceViewModel.waypoints.add(waypointB);
+
+                            } else {
+                                MyWaypoint waypointC = new MyWaypoint(formattedWay, mapEvent,
+                                        new GeoPosition(locList[2].lat, locList[2].lng));
+
+                                searchPlaceViewModel.waypoints.add(waypointA);
+                                searchPlaceViewModel.waypoints.add(waypointB);
+                                searchPlaceViewModel.waypoints.add(waypointC);
                             }
                             searchPlaceViewModel.initWaypoint(jxMapViewer);
 
@@ -206,31 +226,29 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
                                                     }
                                                 }
                                                 searchPlaceViewModel.initWaypoint(jxMapViewer, polylineList, currentList);
-                                                System.out.println(currentList);
                                             }
                                         });
 
                                 buttonB.add(chooseRoute);
                             }
 
-                            // routesTable = new JTable(routes, searchPlaceViewModel.attrB);
-                            // routesTable.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                            // JScrollPane scrollPane = new JScrollPane(routesTable);
-                            // scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                            // this.add(scrollPane);
-
                             this.revalidate();
                             this.repaint();
 
                         } catch (IOException | InterruptedException | ApiException e) {
+                            ImageIcon errorIcon = new ImageIcon("maps_startup/src/main/java/cloudcode/maps/view/icon/error.png");
+                            String errorTitle = "UofT Maps - Invalid Route Request";
+
                             if (originInputField.getSelectedItem().toString().isEmpty() || destinationInputField.getSelectedItem().toString().isEmpty()) {
                                 JOptionPane.showMessageDialog(this,
-                                        "Invalid Request: Missing Value for Origin or Destination",
-                                        "UofT Maps - Invalid Route Request",
-                                        JOptionPane.ERROR_MESSAGE,
-                                        new ImageIcon("maps_startup/src/main/java/cloudcode/maps/view/icon/error.png"));
+                                        "INVALID REQUEST: Missing Origin or Destination Value", errorTitle,
+                                        JOptionPane.ERROR_MESSAGE, errorIcon);
+
+                            } else if (originInputField.getSelectedItem().equals(destinationInputField.getSelectedItem())) {
+                                JOptionPane.showMessageDialog(this,
+                                        "INVALID REQUEST: Origin and Destination Cannot Refer to Same Location", errorTitle,
+                                        JOptionPane.ERROR_MESSAGE, errorIcon);
+
                             } else {
                                 throw new RuntimeException(e);
                             }
@@ -310,6 +328,8 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
 
         this.add(originInput);
         this.add(destinationInput);
+        this.add(waypointInput);
+
         this.add(buttonB);
 
         this.add(Box.createVerticalStrut(5));

@@ -7,5 +7,6 @@ import java.io.IOException;
 
 public interface FileDataAccessInterface {
 
-    Routes fetchResults(String origin, String destination) throws IOException, InterruptedException, ApiException;
+    Routes fetchResults(String origin, String destination, String waypoint)
+            throws IOException, InterruptedException, ApiException;
 }

@@ -8,23 +8,22 @@ import com.google.maps.model.PlacesSearchResult;
 public class RoutesFactory {
 
     public static Routes createRoutes(DirectionsRoute[] routes,
-                                      String ori, String des,
-                                      LatLng oriLoc, LatLng desLoc,
-                                      PlacesSearchResult[] oriMarker, PlacesSearchResult[] desMarker) {
+                                      String ori, String des, String way,
+                                      LatLng oriLoc, LatLng desLoc, LatLng wayLoc,
+                                      PlacesSearchResult oriMarker, PlacesSearchResult desMarker, PlacesSearchResult wayMarker) {
 
-        Object[][] routesData = new Object[routes.length][4];
-        LatLng[][] locData = new LatLng[routes.length][2];
+        Object[][] routesData = new Object[routes.length][5];
+        LatLng[] locData = new LatLng[]{oriLoc, desLoc, wayLoc};
         EncodedPolyline[] polyData = new EncodedPolyline[routes.length];
 
         Object[] oriData = new Object[4];
         Object[] desData = new Object[4];
+        Object[] wayData = new Object[4];
 
         for (int r = 0; r < routes.length; r++) {
             routesData[r][0] = ori;
             routesData[r][1] = des;
-
-            locData[r][0] = oriLoc;
-            locData[r][1] = desLoc;
+            routesData[r][4] = way;
 
             polyData[r] = routes[r].overviewPolyline;
 
@@ -40,16 +39,21 @@ public class RoutesFactory {
             routesData[r][3] = timeTotal / 60 + ":" + timeTotal % 60 + " mins";
         }
 
-        oriData[0] = oriMarker[0].name;
-        oriData[1] = oriMarker[0].formattedAddress;
-        oriData[2] = oriMarker[0].rating;
-        oriData[3] = oriMarker[0].userRatingsTotal;
+        oriData[0] = oriMarker.name;
+        oriData[1] = oriMarker.formattedAddress;
+        oriData[2] = oriMarker.rating;
+        oriData[3] = oriMarker.userRatingsTotal;
 
-        desData[0] = desMarker[0].name;
-        desData[1] = desMarker[0].formattedAddress;
-        desData[2] = desMarker[0].rating;
-        desData[3] = desMarker[0].userRatingsTotal;
+        desData[0] = desMarker.name;
+        desData[1] = desMarker.formattedAddress;
+        desData[2] = desMarker.rating;
+        desData[3] = desMarker.userRatingsTotal;
 
-        return new Routes(routesData, locData, polyData, oriData, desData);
+        wayData[0] = wayMarker.name;
+        wayData[1] = wayMarker.formattedAddress;
+        wayData[2] = wayMarker.rating;
+        wayData[3] = wayMarker.userRatingsTotal;
+
+        return new Routes(routesData, locData, polyData, oriData, desData, wayData);
     }
 }

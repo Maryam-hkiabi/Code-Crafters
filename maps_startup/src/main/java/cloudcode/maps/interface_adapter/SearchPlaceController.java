@@ -20,10 +20,11 @@ public class SearchPlaceController {
         mapsSearchPlaceUseCaseInteractor.execute(searchPlaceInputData);
     }
 
-    public void executeRoute(String origin, String destination) throws IOException, InterruptedException, ApiException {
+    public void executeRoute(String origin, String destination, String waypoint) throws IOException, InterruptedException, ApiException {
         SearchPlaceInputData searchPlaceOrigin = new SearchPlaceInputData(origin);
         SearchPlaceInputData searchPlaceDestination = new SearchPlaceInputData(destination);
+        SearchPlaceInputData searchPlaceWaypoint = new SearchPlaceInputData(waypoint);
 
-        mapsSearchPlaceUseCaseInteractor.execute(searchPlaceOrigin, searchPlaceDestination);
+        mapsSearchPlaceUseCaseInteractor.execute(searchPlaceOrigin, searchPlaceDestination, searchPlaceWaypoint);
     }
 }

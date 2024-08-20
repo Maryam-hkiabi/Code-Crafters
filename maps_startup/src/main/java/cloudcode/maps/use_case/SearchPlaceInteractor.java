@@ -33,12 +33,15 @@ public class SearchPlaceInteractor implements SearchPlaceInputBoundary {
         mapsPresenter.updateSearchResults(places);
     }
 
-    public void execute(SearchPlaceInputData searchPlaceOrigin, SearchPlaceInputData searchPlaceDestination) throws IOException, InterruptedException, ApiException {
+    public void execute(SearchPlaceInputData searchPlaceOrigin, SearchPlaceInputData searchPlaceDestination,
+                        SearchPlaceInputData searchPlaceWaypoint)
+            throws IOException, InterruptedException, ApiException {
 
         String origin = searchPlaceOrigin.getSearch();
         String destination = searchPlaceDestination.getSearch();
+        String waypoint = searchPlaceWaypoint.getSearch();
 
-        Routes routes = fileDataAccessInterface.fetchResults(origin, destination);
+        Routes routes = fileDataAccessInterface.fetchResults(origin, destination, waypoint);
 
         mapsPresenter.updateRouteResults(routes);
     }

@@ -25,13 +25,16 @@ public class LocationFileDataAccessObject implements FileDataAccessInterface {
         csvFile = new File(csvPath);
     }
 
-    public Routes fetchResults(String origin, String destination) throws IOException, InterruptedException, ApiException {
+    public Routes fetchResults(String origin, String destination, String waypoint)
+            throws IOException, InterruptedException, ApiException {
 
         String oriAddress = "";
         String desAddress = "";
+        String wayAddress = "";
 
         LatLng oriLoc = new LatLng();
         LatLng desLoc = new LatLng();
+        LatLng wayLoc = new LatLng();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             String header = reader.readLine();
@@ -54,27 +57,48 @@ public class LocationFileDataAccessObject implements FileDataAccessInterface {
                     desLoc = new LatLng(
                             Double.parseDouble(entry[2]),
                             Double.parseDouble(entry[3]));
+
+                } else if (entry[0].equals(waypoint)) {
+                    wayAddress = String.valueOf(entry[1]);
+                    wayLoc = new LatLng(
+                            Double.parseDouble(entry[2]),
+                            Double.parseDouble(entry[3]));
                 }
             }
         }
         oriAddress = oriAddress.replace("\"", "");
         desAddress = desAddress.replace("\"", "");
+        wayAddress = wayAddress.replace("\"", "");
 
-        DirectionsResult response = DirectionsApi.newRequest(context)
-                .origin(oriAddress)
-                .destination(desAddress)
-                .alternatives(true)
-                .mode(TravelMode.WALKING)
-                .await();
+        DirectionsResult response;
 
-        PlacesSearchResponse oriMarker = PlacesApi.textSearchQuery(context, origin).await();
-        PlacesSearchResponse desMarker = PlacesApi.textSearchQuery(context, destination).await();
+        PlacesSearchResult oriMarker = PlacesApi.textSearchQuery(context, origin).await().results[0];
+        PlacesSearchResult desMarker = PlacesApi.textSearchQuery(context, destination).await().results[0];
+        PlacesSearchResult wayMarker = PlacesApi.textSearchQuery(context, destination).await().results[0];
+
+        if (wayAddress.isEmpty()) {
+            response = DirectionsApi.newRequest(context)
+                    .origin(oriAddress)
+                    .destination(desAddress)
+                    .alternatives(true)
+                    .mode(TravelMode.WALKING)
+                    .await();
+        } else {
+            response = DirectionsApi.newRequest(context)
+                    .origin(oriAddress)
+                    .destination(desAddress)
+                    .alternatives(true)
+                    .mode(TravelMode.WALKING)
+                    .waypoints(wayAddress)
+                    .await();
+
+            wayMarker = PlacesApi.textSearchQuery(context, waypoint).await().results[0];
+        }
 
         context.shutdown();
 
         return RoutesFactory.createRoutes(response.routes,
-                oriAddress, desAddress,
-                oriLoc, desLoc,
-                oriMarker.results, desMarker.results);
+                oriAddress, desAddress, wayAddress, oriLoc, desLoc, wayLoc,
+                oriMarker, desMarker, wayMarker);
     }
 }

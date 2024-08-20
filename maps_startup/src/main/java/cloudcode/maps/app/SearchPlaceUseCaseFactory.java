@@ -15,11 +15,13 @@ public class SearchPlaceUseCaseFactory {
 
     private SearchPlaceUseCaseFactory() {}
 
-    public static SearchPlaceView create(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel, JXMapViewerCustom jxMapViewer) {
+    public static SearchPlaceView create(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel,
+                                         JXMapViewerCustom jxMapViewer) {
 
         try {
             SearchPlaceController searchPlaceController = createSearchPlaceUseCase(viewManagerModel, searchPlaceViewModel, jxMapViewer);
             return new SearchPlaceView(searchPlaceController, searchPlaceViewModel, jxMapViewer);
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "");
         }
@@ -27,7 +29,8 @@ public class SearchPlaceUseCaseFactory {
         return null;
     }
 
-    private static SearchPlaceController createSearchPlaceUseCase(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel, JXMapViewerCustom jxMapViewer) throws IOException {
+    private static SearchPlaceController createSearchPlaceUseCase(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel,
+                                                                  JXMapViewerCustom jxMapViewer) throws IOException {
 
         MapsDataAccessInterface mapsDataAccessObject = new GoogleMapsDataAccessObject();
         FileDataAccessInterface fileDataAccessObject = new LocationFileDataAccessObject("./uoft-campus-locations.csv");
@@ -35,7 +38,8 @@ public class SearchPlaceUseCaseFactory {
         SearchPlaceOutputBoundary searchPlaceOutputBoundary = new SearchPlacePresenter(viewManagerModel, searchPlaceViewModel);
 
         SearchPlaceInputBoundary resultsUseCaseInteractor = new SearchPlaceInteractor(
-                mapsDataAccessObject, fileDataAccessObject, searchPlaceOutputBoundary);
+                mapsDataAccessObject, fileDataAccessObject, searchPlaceOutputBoundary
+        );
 
         return new SearchPlaceController(resultsUseCaseInteractor);
     }

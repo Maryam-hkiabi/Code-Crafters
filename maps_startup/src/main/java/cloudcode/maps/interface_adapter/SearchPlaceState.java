@@ -12,11 +12,12 @@ public class SearchPlaceState {
     private LatLng[] locData;
 
     private Object[][] routes;
-    private LatLng[][] locList;
+    private LatLng[] locList;
     private EncodedPolyline[] polylineList;
 
     private Object[] oriData;
     private Object[] desData;
+    private Object[] wayData;
 
     public SearchPlaceState(SearchPlaceState copy) {
         search = copy.search;
@@ -32,6 +33,7 @@ public class SearchPlaceState {
 
         oriData = copy.oriData;
         desData = copy.desData;
+        wayData = copy.wayData;
     }
 
     public SearchPlaceState() {}
@@ -60,9 +62,9 @@ public class SearchPlaceState {
 
     public void setRoutes(Object[][] routes) { this.routes = routes; }
 
-    public LatLng[][] getLocList() { return locList; }
+    public LatLng[] getLocList() { return locList; }
 
-    public void setLocList(LatLng[][] locList) { this.locList = locList; }
+    public void setLocList(LatLng[] locList) { this.locList = locList; }
 
     public EncodedPolyline[] getPolylineList() { return polylineList; }
 
@@ -75,4 +77,8 @@ public class SearchPlaceState {
     public Object[] getDesData() { return desData; }
 
     public void setDesData(Object[] desData) { this.desData = desData; }
+
+    public Object[] getWayData() { return wayData; }
+
+    public void setWayData(Object[] wayData) { this.wayData = wayData; }
 }

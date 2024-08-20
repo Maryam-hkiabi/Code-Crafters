@@ -28,18 +28,17 @@ import java.util.*;
 public class SearchPlaceViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "UofT Campus Location Search";
-    public final String SEARCH_LABEL = "Search Place";
+    public final String SEARCH_LABEL = "Search Place:";
     public final String SEARCH_BUTTON_LABEL = "Search";
 
     public final String ROUTING_LABEL = "UofT Campus Location Routing";
-    public final String SET_ORIGIN_LABEL = "Set Origin";
-    public final String SET_DESTINATION_LABEL = "Set Destination";
+    public final String SET_ORIGIN_LABEL = "Set Origin:";
+    public final String SET_DESTINATION_LABEL = "Set Destination:";
+    public final String SET_WAYPOINT_LABEL = "Set Waypoint (OPTIONAL):";
     public final String ROUTE_BUTTON_LABEL = "Route";
+    public final String ROUTE_OPTIONS_LABEL = "Show All Route Options:";
 
-    public final String[] attrA = {"PLACE NAME", "ADDRESS", "RATING", "USER RATINGS TOTAL"};
-    public final String[] attrB = {"ORIGIN", "DESTINATION", "DISTANCE", "TIME"};
-
-    public final String ROUTE_OPTIONS_LABEL = "Route Options";
+    public final String[] attr = {"PLACE NAME", "ADDRESS", "RATING", "USER RATINGS TOTAL"};
 
     public final List<String> initCategories = Arrays.asList(
             "library",
@@ -162,9 +161,7 @@ public class SearchPlaceViewModel extends ViewModel {
             jxMapViewer.add(d.getButton());
         }
 
-        if (waypoints.size() == 2) {
-            jxMapViewer.setPolylineData(polylineList, chosenRoutes);
-        }
+        jxMapViewer.setPolylineData(polylineList, chosenRoutes);
     }
 
     public void clearWaypoint(JXMapViewerCustom jxMapViewer) {
@@ -172,16 +169,6 @@ public class SearchPlaceViewModel extends ViewModel {
             jxMapViewer.remove(d.getButton());
         }
         waypoints.clear();
-
-        initWaypoint(jxMapViewer);
-    }
-
-    public void addWayPoint(JXMapViewerCustom jxMapViewer, MyWaypoint waypoint) {
-        for (MyWaypoint d : waypoints) {
-            jxMapViewer.remove(d.getButton());
-        }
-        waypoints.removeIf(waypoint1 -> waypoint1.getPointType() == waypoint.getPointType());
-        waypoints.add(waypoint);
 
         initWaypoint(jxMapViewer);
     }
