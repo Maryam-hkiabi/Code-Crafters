@@ -3,8 +3,12 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" exported="" name="at.swimmesberger.swingx.autocomplete" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="google.maps.services" level="project" />
+    <orderEntry type="library" exported="" name="jdesktop.swingx.jxmapviewer2" level="project" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" exported="" name="slf4j.jul.to" level="project" />
+    <orderEntry type="library" exported="" name="locationtech.jts.core" level="project" />
   </component>
 </module>

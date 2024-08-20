@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>hello-world</artifactId>
+  <artifactId>uoft_maps</artifactId>
   <packaging>jar</packaging>
   <name>Cloud Code Hello World for Cloud Run</name>
   <description>Getting started with Cloud Code for Cloud Run</description>
@@ -32,6 +32,16 @@
         <groupId>com.google.maps</groupId>
         <artifactId>google-maps-services</artifactId>
         <version>2.2.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jxmapviewer</groupId>
+        <artifactId>jxmapviewer2</artifactId>
+        <version>1.3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>at.swimmesberger</groupId>
+        <artifactId>swingx-autocomplete</artifactId>
+        <version>1.6.8</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
