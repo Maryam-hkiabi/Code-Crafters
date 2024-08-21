@@ -15,16 +15,33 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/** Gets routing data
+ *
+ */
 public class LocationFileDataAccessObject implements FileDataAccessInterface {
 
     private final File csvFile;
 
     private final GeoApiContext context = Context.context;
 
+    /** Initialize object to access location data file
+     *
+     * @param csvPath String of path to CSV file with location data
+     */
     public LocationFileDataAccessObject(String csvPath) {
         csvFile = new File(csvPath);
     }
 
+    /** Gets routes for specified origin, destination, and waypoint locations
+     *
+     * @param origin String of origin location
+     * @param destination String of destination location
+     * @param waypoint String of waypoint (stopover) location
+     * @return Routes object with possible routes
+     * @throws IOException in case of input/output error
+     * @throws InterruptedException in case of thread interruption
+     * @throws ApiException in case of API errors
+     */
     public Routes fetchResults(String origin, String destination, String waypoint)
             throws IOException, InterruptedException, ApiException {
 

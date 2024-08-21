@@ -62,14 +62,25 @@ public class SearchPlaceViewModel extends ViewModel {
     public final String locationsHeader = "name,address,latitude,longitude";
     public final String csvPath = "./uoft-campus-locations.csv";
 
+    /**
+     * Constructs SearchPlaceViewModel
+     */
     public SearchPlaceViewModel() { super("search"); }
 
     private SearchPlaceState state = new SearchPlaceState();
 
+    /** Gets the current state
+     *
+     * @return SearchPlaceState representing the current state
+     */
     public SearchPlaceState getState() {
         return state;
     }
 
+    /** Sets the SearchPlaceViewModel state
+     *
+     * @param state SearchPlaceState that the SearchPlaceViewModel state is set to
+     */
     public void setState(SearchPlaceState state) { this.state = state; }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

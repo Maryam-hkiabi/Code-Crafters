@@ -11,10 +11,19 @@ import cloudcode.maps.view.routing.JXMapViewerCustom;
 import javax.swing.*;
 import java.io.IOException;
 
+/** Factory for SearchPlaceView generation.
+ */
 public class SearchPlaceUseCaseFactory {
 
     private SearchPlaceUseCaseFactory() {}
 
+    /** Generates SearchPlaceView for SearchPlace use case.
+     *
+     * @param viewManagerModel Object for managing the view
+     * @param searchPlaceViewModel View Model for SearchPlace results
+     * @param jxMapViewer Slippy map view
+     * @return SearchPlaceView, or null if IOException thrown
+     */
     public static SearchPlaceView create(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel,
                                          JXMapViewerCustom jxMapViewer) {
 
@@ -29,6 +38,14 @@ public class SearchPlaceUseCaseFactory {
         return null;
     }
 
+    /** SearchPlaceController generator for SearchPlace use case.
+     *
+     * @param viewManagerModel Object for managing the view
+     * @param searchPlaceViewModel View Model for SearchPlace results
+     * @param jxMapViewer Slippy map view
+     * @return SearchPlaceController
+     * @throws IOException in case of file access error.
+     */
     private static SearchPlaceController createSearchPlaceUseCase(ViewManagerModel viewManagerModel, SearchPlaceViewModel searchPlaceViewModel,
                                                                   JXMapViewerCustom jxMapViewer) throws IOException {
 
