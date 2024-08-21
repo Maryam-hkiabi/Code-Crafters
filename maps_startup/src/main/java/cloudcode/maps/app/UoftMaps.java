@@ -15,6 +15,7 @@ import static java.awt.BorderLayout.*;
 public class UoftMaps {
 
     public static void main(String[] args) {
+
         JFrame application = new JFrame("UofT Maps - Searching & Routing");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

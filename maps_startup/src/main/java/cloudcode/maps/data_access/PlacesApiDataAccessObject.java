@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleMapsDataAccessObject implements MapsDataAccessInterface {
+public class PlacesApiDataAccessObject implements MapsDataAccessInterface {
 
     private final GeoApiContext context = Context.context;
 
-    public GoogleMapsDataAccessObject() {}
+    public PlacesApiDataAccessObject() {}
 
     public Places fetchResults(String search) throws IOException, InterruptedException, ApiException {
 

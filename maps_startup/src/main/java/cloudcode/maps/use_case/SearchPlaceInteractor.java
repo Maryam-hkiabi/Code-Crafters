@@ -3,6 +3,7 @@ package cloudcode.maps.use_case;
 import cloudcode.maps.data_access.MapsDataAccessInterface;
 import cloudcode.maps.data_access.FileDataAccessInterface;
 
+import cloudcode.maps.data_access.UserDataAccessInterface;
 import cloudcode.maps.entity.Places;
 import cloudcode.maps.entity.Routes;
 import com.google.maps.errors.ApiException;
@@ -13,14 +14,19 @@ public class SearchPlaceInteractor implements SearchPlaceInputBoundary {
 
     final MapsDataAccessInterface mapsDataAccessInterface;
     final FileDataAccessInterface fileDataAccessInterface;
+    final UserDataAccessInterface userDataAccessInterface;
+
     final SearchPlaceOutputBoundary mapsPresenter;
 
     public SearchPlaceInteractor(MapsDataAccessInterface mapsDataAccessInterface,
                                  FileDataAccessInterface fileDataAccessInterface,
+                                 UserDataAccessInterface userDataAccessInterface,
                                  SearchPlaceOutputBoundary mapsPresenter) {
 
         this.mapsDataAccessInterface = mapsDataAccessInterface;
         this.fileDataAccessInterface = fileDataAccessInterface;
+        this.userDataAccessInterface = userDataAccessInterface;
+
         this.mapsPresenter = mapsPresenter;
     }
 
@@ -44,5 +50,25 @@ public class SearchPlaceInteractor implements SearchPlaceInputBoundary {
         Routes routes = fileDataAccessInterface.fetchResults(origin, destination, waypoint);
 
         mapsPresenter.updateRouteResults(routes);
+    }
+
+    @Override
+    public void save(SearchPlaceInputData searchPlaceInputData) throws IOException {
+
+        String search = searchPlaceInputData.getSearch();
+
+        userDataAccessInterface.saveSearch(search);
+    }
+
+    public void remove(SearchPlaceInputData searchPlaceInputData) throws IOException {
+
+        String search = searchPlaceInputData.getSearch();
+
+        userDataAccessInterface.removeSearch(search);
+    }
+
+    public void clear() throws IOException {
+
+        userDataAccessInterface.clearSearchHistory();
     }
 }

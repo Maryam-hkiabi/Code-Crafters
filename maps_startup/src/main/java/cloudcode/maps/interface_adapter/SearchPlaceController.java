@@ -27,4 +27,21 @@ public class SearchPlaceController {
 
         mapsSearchPlaceUseCaseInteractor.execute(searchPlaceOrigin, searchPlaceDestination, searchPlaceWaypoint);
     }
+
+    public void executeSave(String input) throws IOException {
+        SearchPlaceInputData searchPlaceInputData = new SearchPlaceInputData(input);
+
+        mapsSearchPlaceUseCaseInteractor.save(searchPlaceInputData);
+    }
+
+    public void executeRemove(String input) throws IOException {
+        SearchPlaceInputData searchPlaceInputData = new SearchPlaceInputData(input);
+
+        mapsSearchPlaceUseCaseInteractor.remove(searchPlaceInputData);
+    }
+
+    public void executeClear() throws IOException {
+
+        mapsSearchPlaceUseCaseInteractor.clear();
+    }
 }

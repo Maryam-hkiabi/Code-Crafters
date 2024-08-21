@@ -10,10 +10,7 @@ import com.google.maps.*;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LocationFileDataAccessObject implements FileDataAccessInterface {
 

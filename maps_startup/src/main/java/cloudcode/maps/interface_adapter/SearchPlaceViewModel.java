@@ -30,6 +30,9 @@ public class SearchPlaceViewModel extends ViewModel {
     public final String TITLE_LABEL = "UofT Campus Location Search";
     public final String SEARCH_LABEL = "Search Place:";
     public final String SEARCH_BUTTON_LABEL = "Search";
+    public final String CLEAR_HISTORY_LABEL = "Clear History";
+    public final String REMOVE_HISTORY_LABEL = "Remove from History";
+    public final String SAVE_TO_HISTORY_LABEL = "Save to History?";
 
     public final String ROUTING_LABEL = "UofT Campus Location Routing";
     public final String SET_ORIGIN_LABEL = "Set Origin:";
@@ -60,7 +63,9 @@ public class SearchPlaceViewModel extends ViewModel {
         );
 
     public final String locationsHeader = "name,address,latitude,longitude";
-    public final String csvPath = "./uoft-campus-locations.csv";
+    public final String locationsCsvPath = "./uoft-campus-locations.csv";
+
+    public final String userHistoryPath = "./user-search-history.txt";
 
     public SearchPlaceViewModel() { super("search"); }
 
@@ -84,15 +89,31 @@ public class SearchPlaceViewModel extends ViewModel {
 
     public Suggestions suggestions = SuggestionsFactory.createSuggestions(new ArrayList<>());
     List<String> categories = new ArrayList<>();
+    public final File txtFile = new File(userHistoryPath);
 
-    public void setSuggestionsList() {
+    public void setSuggestionsList() throws IOException {
         categories.add("");
+
+        BufferedReader reader = new BufferedReader(new FileReader(txtFile));
+        String row;
+
+        while ((row = reader.readLine()) != null) {
+            String[] history = row.split(",");
+
+            for (String hist : history) {
+                if (!initCategories.contains(hist)) {
+                    categories.add(hist);
+                }
+            }
+        }
+        reader.close();
+
         categories.addAll(initCategories);
         SuggestionsFactory.addCategories(suggestions, categories);
     }
 
     public List<String> locList = new ArrayList<>();
-    public final File csvFile = new File(csvPath);
+    public final File csvFile = new File(locationsCsvPath);
 
     public void setLocationsList() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(csvFile));
@@ -108,6 +129,8 @@ public class SearchPlaceViewModel extends ViewModel {
 
             locList.add(entry[0].replace("\"", ""));
         }
+
+        reader.close();
     }
 
     public final GeoPosition geoA = new GeoPosition(43.666648, -79.403863);

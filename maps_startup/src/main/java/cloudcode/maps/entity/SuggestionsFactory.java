@@ -6,6 +6,10 @@ public class SuggestionsFactory {
 
     public static Suggestions createSuggestions(List<String> suggestions) { return new Suggestions(suggestions); }
 
+    public static void addCategory(Suggestions suggestions, String category) {
+        suggestions.getSuggestions().add(category);
+    }
+
     public static void addCategories(Suggestions suggestions, List<String> categories) {
         suggestions.getSuggestions().addAll(categories);
     }

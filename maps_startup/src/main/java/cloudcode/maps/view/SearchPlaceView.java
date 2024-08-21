@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import cloudcode.maps.view.routing.JXMapViewerCustom;
 
@@ -33,9 +34,10 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
     private final JXMapViewerCustom jxMapViewer;
 
     private final JButton search;
+    private final JButton clear;
     private final JButton route;
 
-    // JTable resultsTable;
+    private final JButton removalButton;
 
     private EventWaypoint getEvent() {
         return waypoint -> JOptionPane.showMessageDialog(this, waypoint.getName(),
@@ -69,9 +71,13 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
         JLabel routeOptions = new JLabel(searchPlaceViewModel.ROUTE_OPTIONS_LABEL);
         routeOptions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JComboBox<String> searchInputField = new JComboBox<>(searchPlaceViewModel.suggestions.getSuggestions().toArray(new String[0]));
+        DefaultComboBoxModel<String> allItems = new DefaultComboBoxModel<>(searchPlaceViewModel.suggestions.getSuggestions().toArray(new String[0]));
+        AtomicReference<JComboBox<String>> searchInputField = new AtomicReference<>(new JComboBox<>(allItems));
 
-        searchInputField.setEditable(true);
+        searchInputField.get().setEditable(true);
+
+        JCheckBox checkHistorySave = new JCheckBox(searchPlaceViewModel.SAVE_TO_HISTORY_LABEL);
+        checkHistorySave.setSelected(true);
 
         JComboBox<String> originInputField = new JComboBox<>(searchPlaceViewModel.locList.toArray(new String[0]));
         JComboBox<String> destinationInputField = new JComboBox<>(searchPlaceViewModel.locList.toArray(new String[0]));
@@ -82,7 +88,7 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
         AutoCompleteDecorator.decorate(waypointInputField);
 
         LabelInputPanel searchInput = new LabelInputPanel(
-                new JLabel(searchPlaceViewModel.SEARCH_LABEL), searchInputField);
+                new JLabel(searchPlaceViewModel.SEARCH_LABEL), searchInputField.get());
 
         LabelInputPanel originInput = new LabelInputPanel(
                 new JLabel(searchPlaceViewModel.SET_ORIGIN_LABEL), originInputField);
@@ -96,6 +102,7 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
         searchInput.setAlignmentX(Component.CENTER_ALIGNMENT);
         originInput.setAlignmentX(Component.CENTER_ALIGNMENT);
         destinationInput.setAlignmentX(Component.CENTER_ALIGNMENT);
+        waypointInput.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttonA = new JPanel();
         JPanel buttonB = new JPanel();
@@ -103,17 +110,63 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
         buttonA.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonB.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        searchInput.add(checkHistorySave);
+
         search = new JButton(searchPlaceViewModel.SEARCH_BUTTON_LABEL);
         buttonA.add(search);
 
+        clear = new JButton(searchPlaceViewModel.CLEAR_HISTORY_LABEL);
+        buttonA.add(clear);
+
         route = new JButton(searchPlaceViewModel.ROUTE_BUTTON_LABEL);
         buttonB.add(route);
+
+        removalButton = new JButton(searchPlaceViewModel.REMOVE_HISTORY_LABEL);
+        removalButton.setVisible(false);
+        buttonA.add(removalButton);
+
+        searchInputField.get().addItemListener(
+                evt -> {
+                    if (evt.getStateChange() == ItemEvent.DESELECTED) {
+                        removalButton.setVisible(false);
+                    }
+
+                    if (evt.getStateChange() == ItemEvent.SELECTED) {
+                        String item = evt.getItem().toString();
+
+                        if (!item.isEmpty() && !searchPlaceViewModel.initCategories.contains(item)) {
+                            if (item.equals(searchInputField.get().getSelectedItem().toString())) {
+                                removalButton.setVisible(true);
+                            }
+                        }
+                    }
+                });
+
+        removalButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(removalButton)) {
+                        try {
+                            searchPlaceController.executeRemove(searchInputField.get().getSelectedItem().toString());
+                            searchInputField.get().removeItem(searchInputField.get().getSelectedItem());
+
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                });
 
         search.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(search)) {
                         try {
-                            searchPlaceController.executeSearch(searchInputField.getSelectedItem().toString());
+                            searchPlaceController.executeSearch(searchInputField.get().getSelectedItem().toString());
+
+                            if (checkHistorySave.isSelected() && !searchInputField.get().getSelectedItem().toString().isEmpty()) {
+                                searchPlaceController.executeSave(searchInputField.get().getSelectedItem().toString());
+
+                                allItems.insertElementAt(searchInputField.get().getSelectedItem().toString(), 1);
+                                searchInputField.set(new JComboBox<>(allItems));
+                            }
 
                             Object[][] results = searchPlaceViewModel.getState().getResults();
                             LatLng[] locData = searchPlaceViewModel.getState().getLocData();
@@ -130,14 +183,6 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
                             }
                             searchPlaceViewModel.initWaypoint(jxMapViewer);
 
-                            // resultsTable = new JTable(results, attr);
-                            // resultsTable.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                            // JScrollPane scrollPane = new JScrollPane(resultsTable);
-                            // scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                            // this.add(scrollPane);
-
                             this.revalidate();
                             this.repaint();
 
@@ -145,8 +190,24 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
                             throw new RuntimeException(e);
                         }
                     }
-                }
-        );
+                });
+
+        clear.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(clear)) {
+                        try {
+                            searchPlaceController.executeClear();
+                            JOptionPane.showMessageDialog(this,
+                                    "Search History Cleared",
+                                    "UofT Maps - Search History",
+                                    JOptionPane.INFORMATION_MESSAGE,
+                                    new ImageIcon("maps_startup/src/main/java/cloudcode/maps/view/icon/search.png"));
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
 
         route.addActionListener(
                 evt -> {
@@ -254,15 +315,14 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
                             }
                         }
                     }
-                }
-        );
+                });
 
-        searchInputField.addKeyListener(
+        searchInputField.get().addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SearchPlaceState currentState = searchPlaceViewModel.getState();
-                        currentState.setSearch(searchInputField.getSelectedItem().toString() + e.getKeyChar());
+                        currentState.setSearch(searchInputField.get().getSelectedItem().toString() + e.getKeyChar());
                         searchPlaceViewModel.setState(currentState);
                     }
 
@@ -335,9 +395,7 @@ public class SearchPlaceView extends JPanel implements ActionListener, PropertyC
         this.add(Box.createVerticalStrut(5));
     }
 
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println();
-    }
+    public void actionPerformed(ActionEvent evt) { System.out.println(); }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

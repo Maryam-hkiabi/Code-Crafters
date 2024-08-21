@@ -5,7 +5,6 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
 import java.util.List;
-import java.util.Random;
 
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.LatLng;
@@ -51,10 +50,9 @@ public class JXMapViewerCustom extends JXMapViewer {
             if (!chosenRoutes.isEmpty()) {
                 for (int chosenRoute : chosenRoutes) {
                     draw(path2D, polylineData[chosenRoute]);
-
-                    graphics2D.setColor(new Color(255, 0, 255));
                 }
             }
+            graphics2D.setColor(new Color(255, 0, 255));
             graphics2D.draw(path2D);
             graphics2D.dispose();
         }
