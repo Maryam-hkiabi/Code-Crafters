@@ -12,8 +12,14 @@ import java.awt.*;
 
 import static java.awt.BorderLayout.*;
 
+/** Main class for the UofTMaps app.
+ *
+ */
 public class UoftMaps {
-
+    /** The main method for running the app.
+     *
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
 
         JFrame application = new JFrame("UofT Maps - Searching & Routing");

@@ -5,8 +5,16 @@ import com.google.maps.model.PlacesSearchResult;
 
 import java.util.List;
 
+/** Factory class that creates Places object from Places API data
+ *
+ */
 public class PlacesFactory {
 
+    /** Creates a Places object
+     *
+     * @param resultList A list of PlacesSearchResults from a Places API call
+     * @return Places object
+     */
     public static Places createPlaces(List<PlacesSearchResult> resultList) {
 
         Object[][] resultsData = new Object[resultList.size()][4];

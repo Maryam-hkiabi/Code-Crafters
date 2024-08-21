@@ -5,8 +5,25 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.PlacesSearchResult;
 
+/** Factory class that creates Routes object from Directions API data
+ *
+ */
 public class RoutesFactory {
 
+    /** Creates a Routes object
+     *
+     * @param routes Array of DirectionsRoute objects with route information from API call
+     * @param ori String of origin
+     * @param des String of destination
+     * @param way String of waypoint
+     * @param oriLoc LatLng of origin location
+     * @param desLoc LatLng of destination location
+     * @param wayLoc LatLng of waypoint location
+     * @param oriMarker PlaceSearchResults object holding information about origin
+     * @param desMarker PlaceSearchResults object holding information about destination
+     * @param wayMarker PlaceSearchResults object holding information about waypoint
+     * @return Routes object
+     */
     public static Routes createRoutes(DirectionsRoute[] routes,
                                       String ori, String des, String way,
                                       LatLng oriLoc, LatLng desLoc, LatLng wayLoc,

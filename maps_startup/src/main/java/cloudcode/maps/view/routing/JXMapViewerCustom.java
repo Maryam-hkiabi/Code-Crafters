@@ -12,19 +12,35 @@ import com.google.maps.model.LatLng;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 
+/** Child class of JXMapViewer for added functionality for drawing map routes from Directions API polyline data
+ *
+ */
 public class JXMapViewerCustom extends JXMapViewer {
 
     private EncodedPolyline[] polylineData;
     private List<Integer> chosenRoutes;
 
+    /** Getter for EncodedPolylines
+     *
+     * @return Array of EncodedPolylines representing routes
+     */
     public EncodedPolyline[] getPolylineData() {
         return polylineData;
     }
 
+    /** Getter for routes chosen for mapping
+     *
+     * @return List of integers representing the routes chosen for mapping
+     */
     public List<Integer> getChosenRoutes() {
         return chosenRoutes;
     }
 
+    /** Set routing data for mapping routes
+     *
+     * @param polylineData Array of EncodedPolylines
+     * @param chosenRoutes List of integers representing chosen routes
+     */
     public void setPolylineData(EncodedPolyline[] polylineData, List<Integer> chosenRoutes) {
         this.polylineData = polylineData;
         this.chosenRoutes = chosenRoutes;
